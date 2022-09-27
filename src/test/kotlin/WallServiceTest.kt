@@ -31,7 +31,6 @@ class WallServiceTest {
         WallService.add(post)
 
         // act
-
         val result = WallService.add(post)
 
         // assert
@@ -67,10 +66,10 @@ class WallServiceTest {
             copyright = "Vk",
             likes = Likes(3)
         )
+        WallService.add(post)
+        WallService.add(post)
 
         // act
-        WallService.add(post)
-        WallService.add(post)
         val result = WallService.update(updatePost)
 
         // assert
@@ -93,7 +92,7 @@ class WallServiceTest {
         )
 
         val updatePost = Post(
-            id = 2,
+            id = 1,
             ownerId = 3,
             fromId = 4,
             date = 1663613504,
@@ -104,9 +103,9 @@ class WallServiceTest {
             copyright = "Vk",
             likes = Likes(3)
         )
+        WallService.add(post)
 
         // act
-        WallService.add(post)
         val result = WallService.update(updatePost)
 
         // assert

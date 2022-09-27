@@ -54,8 +54,7 @@ object WallService {
                 )
                 status = true
             }
-            else
-                println(posts[index])
+
         }
         return status
     }
@@ -63,4 +62,33 @@ object WallService {
 
 fun main() {
 
+    val post = Post(
+        ownerId = 2,
+        fromId = 312415,
+        date = 1663613504,
+        text = "Welcome!",
+        replyOwnerId = 0,
+        replyPostId = 0,
+        friendsOnly = false,
+        copyright = "Vk",
+        likes = Likes(1)
+    )
+
+    val updatePost = Post(
+        id = 1,
+        ownerId = 3,
+        fromId = 4,
+        date = 1663613504,
+        text = "Welcome home!",
+        replyOwnerId = 0,
+        replyPostId = 0,
+        friendsOnly = false,
+        copyright = "Vk",
+        likes = Likes(3)
+    )
+    WallService.add(post)
+    WallService.add(post)
+
+    WallService.update(updatePost)
+    println(posts[1])
 }
