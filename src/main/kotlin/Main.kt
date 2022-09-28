@@ -20,11 +20,12 @@ data class Post(
 
 
 object WallService {
-    var posts = emptyArray<Post>()
+    private var posts = emptyArray<Post>()
     private var nextId = 0
 
      fun clear() {
         posts = emptyArray()
+        nextId = 0
     }
 
     fun add(post: Post): Post {
@@ -90,5 +91,5 @@ fun main() {
     WallService.add(post)
 
     WallService.update(updatePost)
-    println(posts[1])
+   // println(posts[1])
 }

@@ -4,14 +4,15 @@ import org.junit.Assert.*
 import org.junit.Before
 import ru.netology.domain.Post
 import ru.netology.domain.WallService
-import ru.netology.domain.WallService.posts
+//import ru.netology.domain.WallService.posts
 import ru.netology.domain.ru.netology.domain.Likes
+import kotlin.test.BeforeTest
 
 class WallServiceTest {
-
     @Before
     fun clearBeforeTest() {
         WallService.clear()
+        println("Before")
     }
 
     @Test
@@ -37,7 +38,6 @@ class WallServiceTest {
         assertEquals(1, result.id)
 
     }
-
 
     @Test
     fun update_returnTrue(){
@@ -73,9 +73,8 @@ class WallServiceTest {
         val result = WallService.update(updatePost)
 
         // assert
-        assertEquals(true, result)
+        assertTrue(result)
     }
-
     @Test
     fun update_returnFalse(){
         // arrange
@@ -109,7 +108,7 @@ class WallServiceTest {
         val result = WallService.update(updatePost)
 
         // assert
-        assertEquals(false, result)
+        assertFalse(result)
     }
 }
 
