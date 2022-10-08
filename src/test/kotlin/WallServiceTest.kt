@@ -4,7 +4,6 @@ import org.junit.Assert.*
 import org.junit.Before
 import ru.netology.domain.Post
 import ru.netology.domain.WallService
-//import ru.netology.domain.WallService.posts
 import ru.netology.domain.ru.netology.domain.Likes
 import kotlin.test.BeforeTest
 
@@ -23,11 +22,11 @@ class WallServiceTest {
             fromId = 312415,
             date = 1663613504,
             text = "Welcome!",
-            replyOwnerId = 0,
-            replyPostId = 0,
+            replyOwnerId = null,
+            replyPostId = null,
             friendsOnly = false,
-            copyright = "Vk",
-            likes = Likes(1)
+            copyright = null,
+            likes = null
         )
         WallService.add(post)
 

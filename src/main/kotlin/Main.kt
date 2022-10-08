@@ -11,11 +11,11 @@ data class Post(
     val fromId: Int,
     val date: Int,
     val text: String,
-    val replyOwnerId: Int,
-    val replyPostId: Int,
+    val replyOwnerId: Int?,
+    val replyPostId: Int?,
     val friendsOnly: Boolean,
-    val copyright: String,
-    var likes: Likes
+    val copyright: String?,
+    var likes: Likes?
 )
 
 
@@ -81,8 +81,8 @@ fun main() {
         fromId = 4,
         date = 1663613504,
         text = "Welcome home!",
-        replyOwnerId = 0,
-        replyPostId = 0,
+        replyOwnerId = null,
+        replyPostId = null,
         friendsOnly = false,
         copyright = "Vk",
         likes = Likes(3)
