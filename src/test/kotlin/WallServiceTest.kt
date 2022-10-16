@@ -2,9 +2,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
-import ru.netology.domain.Post
-import ru.netology.domain.WallService
-import ru.netology.domain.ru.netology.domain.Likes
+import ru.netology.domain.*
 import kotlin.test.BeforeTest
 
 class WallServiceTest {
@@ -22,11 +20,16 @@ class WallServiceTest {
             fromId = 312415,
             date = 1663613504,
             text = "Welcome!",
-            replyOwnerId = null,
-            replyPostId = null,
+            replyOwnerId = 0,
+            replyPostId = 0,
             friendsOnly = false,
-            copyright = null,
-            likes = null
+            comments = Comments(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
+
         )
         WallService.add(post)
 
@@ -49,8 +52,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
+            comments = Comments(2),
             copyright = "Vk",
-            likes = Likes(2)
+            likes = Likes(2),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
         )
 
         val updatePost = Post(
@@ -62,8 +69,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
+            comments = Comments(2),
             copyright = "Vk",
-            likes = Likes(3)
+            likes = Likes(2),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
         )
         WallService.add(post)
         WallService.add(post)
@@ -78,15 +89,19 @@ class WallServiceTest {
     fun update_returnFalse(){
         // arrange
         val post = Post(
-            ownerId = 2,
-            fromId = 312415,
+            ownerId = 3,
+            fromId = 4,
             date = 1663613504,
-            text = "Welcome!",
-            replyOwnerId = 0,
-            replyPostId = 0,
+            text = "Welcome home!",
+            replyOwnerId = null,
+            replyPostId = null,
             friendsOnly = false,
+            comments = Comments(1),
             copyright = "Vk",
-            likes = Likes(2)
+            likes = Likes(3),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
         )
 
         val updatePost = Post(
@@ -98,8 +113,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
+            comments = Comments(2),
             copyright = "Vk",
-            likes = Likes(3)
+            likes = Likes(2),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
         )
         WallService.add(post)
 

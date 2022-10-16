@@ -1,36 +1,24 @@
 package ru.netology.domain
 
 import ru.netology.domain.WallService.posts
-import ru.netology.domain.ru.netology.domain.Likes
+import java.lang.reflect.TypeVariable
+import java.util.Objects
 import kotlin.collections.withIndex
 import kotlin.collections.withIndex as withIndex1
-
-data class Post(
-    var id: Int = 0,
-    val ownerId: Int,
-    val fromId: Int,
-    val date: Int,
-    val text: String,
-    val replyOwnerId: Int?,
-    val replyPostId: Int?,
-    val friendsOnly: Boolean,
-    val copyright: String?,
-    var likes: Likes?
-)
 
 
 object WallService {
     private var posts = emptyArray<Post>()
     private var nextId = 0
 
-     fun clear() {
+    fun clear() {
         posts = emptyArray()
         nextId = 0
     }
 
     fun add(post: Post): Post {
         //var lastPostId: Int = posts.lastIndex + 1
-       //post.id = lastPostId
+        //post.id = lastPostId
         post.id = nextId
         nextId += 1
         posts += post
@@ -50,8 +38,12 @@ object WallService {
                     replyOwnerId = postUpd.replyOwnerId,
                     replyPostId = postUpd.replyPostId,
                     friendsOnly = postUpd.friendsOnly,
+                    comments = postUpd.comments,
                     copyright = postUpd.copyright,
-                    likes = postUpd.likes
+                    likes = postUpd.likes,
+                    reposts = postUpd.reposts,
+                    views = postUpd.views,
+                    attachment = postUpd.attachment
                 )
                 status = true
             }
@@ -71,8 +63,13 @@ fun main() {
         replyOwnerId = 0,
         replyPostId = 0,
         friendsOnly = false,
+        comments = Comments(2),
         copyright = "Vk",
-        likes = Likes(1)
+        likes = Likes(1),
+        reposts = Reposts(2),
+        views = Views(4),
+        attachment = GraffitiAttachment("Graffiti", Graffiti(1,2,"22","24")) as Attachment
+
     )
 
     val updatePost = Post(
@@ -84,8 +81,12 @@ fun main() {
         replyOwnerId = null,
         replyPostId = null,
         friendsOnly = false,
+        comments = Comments(1),
         copyright = "Vk",
-        likes = Likes(3)
+        likes = Likes(3),
+        reposts = Reposts(2),
+        views = Views(4),
+        attachment = GraffitiAttachment("Graffiti", Graffiti(1,2,"22","24")) as Attachment
     )
     WallService.add(post)
     WallService.add(post)
