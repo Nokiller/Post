@@ -16,4 +16,4 @@ class Note(
     var canComment: Boolean = true,
     val textWiki: String
 )
-class NoteAttachments(override val type: String, val note: Note): Attachment()
+class NoteAttachments(val note: Note): Attachment("note")

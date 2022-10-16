@@ -7,7 +7,7 @@ class Graffiti(
     val photo604: String
 )
 
-class GraffitiAttachment(override val type: String, val graffiti: Graffiti): Attachment() {
+class GraffitiAttachment(val graffiti: Graffiti): Attachment("Graffiti") {
 
 
 }

@@ -7,4 +7,4 @@ class App(
     val photo604: String
 )
 
-class AppAttachment(override val type: String, val app: App) : Attachment()
+class AppAttachment(val app: App) : Attachment("app")

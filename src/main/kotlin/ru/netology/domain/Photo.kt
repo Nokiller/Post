@@ -12,7 +12,7 @@ class Photo(
     val height: Int
 )
 
-class PhotoAttachment(override val type: String, val photo: Photo): Attachment()
+class PhotoAttachment(val photo: Photo): Attachment("photo")
 
 
 data class Sizes(

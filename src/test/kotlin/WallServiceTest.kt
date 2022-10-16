@@ -28,7 +28,7 @@ class WallServiceTest {
             likes = Likes(1),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
+            attachment = AppAttachment(App(1,"Test app","22","24"))
 
         )
         WallService.add(post)
@@ -57,7 +57,7 @@ class WallServiceTest {
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
+            attachment = AppAttachment(App(1,"Test app","22","24"))
         )
 
         val updatePost = Post(
@@ -74,7 +74,7 @@ class WallServiceTest {
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
+            attachment = AppAttachment(App(1,"Test app","22","24"))
         )
         WallService.add(post)
         WallService.add(post)
@@ -101,7 +101,7 @@ class WallServiceTest {
             likes = Likes(3),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
+            attachment = AppAttachment(App(1,"Test app","22","24"))
         )
 
         val updatePost = Post(
@@ -118,7 +118,7 @@ class WallServiceTest {
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = GraffitiAttachment("Graffiti", Graffiti(1,2,"22","24")) as Attachment
+            attachment = GraffitiAttachment(Graffiti(1,2,"22","24"))
         )
         WallService.add(post)
 
@@ -128,6 +128,36 @@ class WallServiceTest {
         // assert
         assertFalse(result)
     }
+
+    @Test
+    fun attachmentType() {
+        // arrange
+        val post = Post(
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            comments = Comments(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1,2,"22","24"))
+        )
+
+        WallService.add(post)
+
+        // act
+        val result = post.attachment.type
+
+        // assert
+        assertEquals("Graffiti", result)
+    }
+
+
 }
 
 

@@ -1,5 +1,3 @@
 package ru.netology.domain
 
-abstract class Attachment{
-    abstract val type: String
-}
+sealed class Attachment (val type: String)

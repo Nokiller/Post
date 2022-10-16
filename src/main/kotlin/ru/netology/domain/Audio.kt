@@ -15,4 +15,4 @@ class Audio(
     val isHd: Boolean = false
 )
 
-class AudioAttachment(override val type: String, val audio: Audio): Attachment()
+class AudioAttachment(val audio: Audio): Attachment("audio")

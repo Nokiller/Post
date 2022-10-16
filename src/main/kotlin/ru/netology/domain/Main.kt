@@ -55,42 +55,44 @@ object WallService {
 
 fun main() {
 
-//    val post = Post(
-//        ownerId = 2,
-//        fromId = 312415,
-//        date = 1663613504,
-//        text = "Welcome!",
-//        replyOwnerId = 0,
-//        replyPostId = 0,
-//        friendsOnly = false,
-//        comments = Comments(2),
-//        copyright = "Vk",
-//        likes = Likes(1),
-//        reposts = Reposts(2),
-//        views = Views(4),
-//        attachment = GraffitiAttachment("Graffiti", Graffiti(1,2,"22","24")) as Attachment
-//
-//    )
-//
-//    val updatePost = Post(
-//        id = 1,
-//        ownerId = 3,
-//        fromId = 4,
-//        date = 1663613504,
-//        text = "Welcome home!",
-//        replyOwnerId = null,
-//        replyPostId = null,
-//        friendsOnly = false,
-//        comments = Comments(1),
-//        copyright = "Vk",
-//        likes = Likes(3),
-//        reposts = Reposts(2),
-//        views = Views(4),
-//        attachment = GraffitiAttachment("Graffiti", Graffiti(1,2,"22","24")) as Attachment
-//    )
-//    WallService.add(post)
-//    WallService.add(post)
-//
-//    WallService.update(updatePost)
-//   // println(posts[1])
+    val post = Post(
+        ownerId = 2,
+        fromId = 312415,
+        date = 1663613504,
+        text = "Welcome!",
+        replyOwnerId = 0,
+        replyPostId = 0,
+        friendsOnly = false,
+        comments = Comments(2),
+        copyright = "Vk",
+        likes = Likes(1),
+        reposts = Reposts(2),
+        views = Views(4),
+        attachment = GraffitiAttachment(Graffiti(1,2,"22","24"))
+
+    )
+
+    val updatePost = Post(
+        id = 1,
+        ownerId = 3,
+        fromId = 4,
+        date = 1663613504,
+        text = "Welcome home!",
+        replyOwnerId = null,
+        replyPostId = null,
+        friendsOnly = false,
+        comments = Comments(1),
+        copyright = "Vk",
+        likes = Likes(3),
+        reposts = Reposts(2),
+        views = Views(4),
+        attachment = GraffitiAttachment( Graffiti(1,2,"22","24"))
+    )
+    WallService.add(post)
+    WallService.add(post)
+
+    WallService.update(updatePost)
+   // println(posts[1])
+
+    println(post.attachment.type)
 }
