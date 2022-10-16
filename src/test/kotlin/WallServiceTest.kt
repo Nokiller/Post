@@ -118,7 +118,7 @@ class WallServiceTest {
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment("App", App(1,"Test app","22","24")) as Attachment
+            attachment = GraffitiAttachment("Graffiti", Graffiti(1,2,"22","24")) as Attachment
         )
         WallService.add(post)
 
