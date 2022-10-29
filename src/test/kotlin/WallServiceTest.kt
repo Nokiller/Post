@@ -3,7 +3,8 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 import ru.netology.domain.*
-import kotlin.test.BeforeTest
+import kotlin.Exception
+import kotlin.test.assertFailsWith
 
 class WallServiceTest {
     @Before
@@ -23,12 +24,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
-            comments = Comments(2),
+            commentsOfPost = CommentsOfPost(2),
             copyright = "Vk",
             likes = Likes(1),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment(App(1,"Test app","22","24"))
+            attachment = AppAttachment(App(1, "Test app", "22", "24"))
 
         )
         WallService.add(post)
@@ -42,7 +43,7 @@ class WallServiceTest {
     }
 
     @Test
-    fun update_returnTrue(){
+    fun update_returnTrue() {
         // arrange
         val post = Post(
             ownerId = 2,
@@ -52,12 +53,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
-            comments = Comments(2),
+            commentsOfPost = CommentsOfPost(2),
             copyright = "Vk",
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment(App(1,"Test app","22","24"))
+            attachment = AppAttachment(App(1, "Test app", "22", "24"))
         )
 
         val updatePost = Post(
@@ -69,12 +70,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
-            comments = Comments(2),
+            commentsOfPost = CommentsOfPost(2),
             copyright = "Vk",
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment(App(1,"Test app","22","24"))
+            attachment = AppAttachment(App(1, "Test app", "22", "24"))
         )
         WallService.add(post)
         WallService.add(post)
@@ -85,8 +86,9 @@ class WallServiceTest {
         // assert
         assertTrue(result)
     }
+
     @Test
-    fun update_returnFalse(){
+    fun update_returnFalse() {
         // arrange
         val post = Post(
             ownerId = 3,
@@ -96,12 +98,12 @@ class WallServiceTest {
             replyOwnerId = null,
             replyPostId = null,
             friendsOnly = false,
-            comments = Comments(1),
+            commentsOfPost = CommentsOfPost(1),
             copyright = "Vk",
             likes = Likes(3),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = AppAttachment(App(1,"Test app","22","24"))
+            attachment = AppAttachment(App(1, "Test app", "22", "24"))
         )
 
         val updatePost = Post(
@@ -113,12 +115,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
-            comments = Comments(2),
+            commentsOfPost = CommentsOfPost(2),
             copyright = "Vk",
             likes = Likes(2),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = GraffitiAttachment(Graffiti(1,2,"22","24"))
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
         )
         WallService.add(post)
 
@@ -140,12 +142,12 @@ class WallServiceTest {
             replyOwnerId = 0,
             replyPostId = 0,
             friendsOnly = false,
-            comments = Comments(2),
+            commentsOfPost = CommentsOfPost(2),
             copyright = "Vk",
             likes = Likes(1),
             reposts = Reposts(2),
             views = Views(4),
-            attachment = GraffitiAttachment(Graffiti(1,2,"22","24"))
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
         )
 
         WallService.add(post)
@@ -157,7 +159,65 @@ class WallServiceTest {
         assertEquals("Graffiti", result)
     }
 
+    @Test
+    fun commentAddedToPost() {
+        // arrange
+        val post1 = Post(
+            id = 2,
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            commentsOfPost = CommentsOfPost(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+        )
 
+        WallService.add(post1)
+        WallService.createComment(post1.id, Comments(id = 2, fromId = 2, date = 1, text = "test"))
+
+        // act
+        val result = WallService.comments[0].id
+
+        // assert
+        assertEquals(2, result)
+    }
+
+    @Test
+    fun shouldThrow() {
+        // arrange
+        val post = Post(
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            commentsOfPost = CommentsOfPost(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+        )
+
+        WallService.add(post)
+
+        // act
+        val exception = assertFailsWith<Exception> {
+            WallService.createComment(postId = 1, Comments(1, 1, 1, "test"))
+        }
+
+        // assert
+        assertEquals("PostNotFoundException", exception.message)
+    }
 }
 
 

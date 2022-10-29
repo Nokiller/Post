@@ -10,7 +10,7 @@ data class Post(
     val replyOwnerId: Int?,
     val replyPostId: Int?,
     val friendsOnly: Boolean,
-    var comments: Comments?,
+    var commentsOfPost: CommentsOfPost,
     val copyright: String?,
     var likes: Likes?,
     var reposts: Reposts?,
@@ -29,7 +29,7 @@ data class Reposts(
     var count: Int = 0,
     var userReposted: Boolean = false
 )
-data class Comments(
+data class CommentsOfPost(
     var count: Int = 0,
     var canPost: Boolean = true,
     var groupCanPost: Boolean = true,
