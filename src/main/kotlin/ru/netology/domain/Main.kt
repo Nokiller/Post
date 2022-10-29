@@ -1,14 +1,12 @@
 package ru.netology.domain
 
-import ru.netology.domain.WallService.posts
-import java.lang.reflect.TypeVariable
-import java.util.Objects
-import kotlin.collections.withIndex
-import kotlin.collections.withIndex as withIndex1
 
+import kotlin.collections.withIndex
 
 object WallService {
     private var posts = emptyArray<Post>()
+    internal var comments = emptyArray<Comments>()
+//    var reports = emptyArray<ReportComments>()
     private var nextId = 0
 
     fun clear() {
@@ -38,7 +36,7 @@ object WallService {
                     replyOwnerId = postUpd.replyOwnerId,
                     replyPostId = postUpd.replyPostId,
                     friendsOnly = postUpd.friendsOnly,
-                    comments = postUpd.comments,
+                    commentsOfPost = postUpd.commentsOfPost,
                     copyright = postUpd.copyright,
                     likes = postUpd.likes,
                     reposts = postUpd.reposts,
@@ -51,48 +49,90 @@ object WallService {
         }
         return status
     }
+
+    fun createComment(postId: Int, comment: Comments): Comments {
+        for (post in posts) {
+            if (post.id == postId) {
+                comments += comment
+            } else {
+//                println("Post.id = ${post.id}")
+//                println("PostId = $postId")
+                throw Exception("PostNotFoundException")
+
+            }
+        }
+        return comments.last()
+    }
+
+//    fun createReportForComment(commentId: Int, reason: Int, reportComments: ReportComments): Boolean {
+//        var result = false
+//        for ((index, report) in reports.withIndex()) {
+//            if (report.commentId == commentId && report.reason == reason) {
+//                reports += reportComments
+//                result = true   //TODO Не получается получить true
+//            } else if (report.commentId == commentId && report.reason != reason) {
+//                throw Exception("PastReasonNotEqualException")
+//              //  result = 0
+//            } else if (report.commentId != commentId && report.reason == reason)  {
+//                throw Exception("PastCommentIdNotEqualException")
+//            } else {
+//                throw Exception("UndefinedPostException")
+//            }
+//        }
+//        return result
+//    }
+
 }
 
 fun main() {
+//
+//    val post = Post(
+//        id = 1,
+//        ownerId = 2,
+//        fromId = 312415,
+//        date = 1663613504,
+//        text = "Welcome!",
+//        replyOwnerId = 0,
+//        replyPostId = 0,
+//        friendsOnly = false,
+//        commentsOfPost = CommentsOfPost(1),
+//        copyright = "Vk",
+//        likes = Likes(1),
+//        reposts = Reposts(2),
+//        views = Views(4),
+//        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+//
+//    )
+//
+//    val updatePost = Post(
+//        id = 1,
+//        ownerId = 3,
+//        fromId = 4,
+//        date = 1663613504,
+//        text = "Welcome home!",
+//        replyOwnerId = null,
+//        replyPostId = null,
+//        friendsOnly = false,
+//        commentsOfPost = CommentsOfPost(2),
+//        copyright = "Vk",
+//        likes = Likes(3),
+//        reposts = Reposts(2),
+//        views = Views(4),
+//        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+//    )
+//    WallService.add(post)
+//    WallService.add(post)
+//    WallService.add(post)
+//
+//    //WallService.update(updatePost)
+//    // println(posts[1])
+//
+//   // println(post.attachment.type)
+//
+//    WallService.createComment(post.id, Comments(1,1,1,"test"))
+//    println(comments[0].id)
+//    println(post.id)
+////
+////    println( WallService.createReportForComment(commentId = 1, reason = 1, reportComments = ReportComments(1,2, WallService.comments[2].id, 1)))
 
-    val post = Post(
-        ownerId = 2,
-        fromId = 312415,
-        date = 1663613504,
-        text = "Welcome!",
-        replyOwnerId = 0,
-        replyPostId = 0,
-        friendsOnly = false,
-        comments = Comments(2),
-        copyright = "Vk",
-        likes = Likes(1),
-        reposts = Reposts(2),
-        views = Views(4),
-        attachment = GraffitiAttachment(Graffiti(1,2,"22","24"))
-
-    )
-
-    val updatePost = Post(
-        id = 1,
-        ownerId = 3,
-        fromId = 4,
-        date = 1663613504,
-        text = "Welcome home!",
-        replyOwnerId = null,
-        replyPostId = null,
-        friendsOnly = false,
-        comments = Comments(1),
-        copyright = "Vk",
-        likes = Likes(3),
-        reposts = Reposts(2),
-        views = Views(4),
-        attachment = GraffitiAttachment( Graffiti(1,2,"22","24"))
-    )
-    WallService.add(post)
-    WallService.add(post)
-
-    WallService.update(updatePost)
-   // println(posts[1])
-
-    println(post.attachment.type)
 }
