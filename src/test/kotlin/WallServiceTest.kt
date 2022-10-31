@@ -180,13 +180,13 @@ class WallServiceTest {
         )
 
         WallService.add(post1)
-        WallService.createComment(post1.id, Comments(id = 2, fromId = 2, date = 1, text = "test"))
+        WallService.createComment(post1.id, Comments(id = 3, fromId = 2, date = 1, text = "test"))
 
         // act
         val result = WallService.comments[0].id
 
         // assert
-        assertEquals(2, result)
+        assertEquals(3, result)
     }
 
     @Test
@@ -209,6 +209,7 @@ class WallServiceTest {
         )
 
         WallService.add(post)
+
 
         // act
         val exception = assertFailsWith<Exception> {
