@@ -3,7 +3,6 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 import ru.netology.domain.*
-import kotlin.Exception
 import kotlin.test.assertFailsWith
 
 class WallServiceTest {
@@ -212,12 +211,36 @@ class WallServiceTest {
 
 
         // act
-        val exception = assertFailsWith<Exception> {
+        val exception = assertFailsWith<RuntimeException> {
             WallService.createComment(postId = 1, Comments(1, 1, 1, "test"))
         }
 
         // assert
         assertEquals("PostNotFoundException", exception.message)
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow2() {
+
+        val post = Post(
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            commentsOfPost = CommentsOfPost(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+        )
+        WallService.add(post)
+
+        WallService.createComment(1, Comments(1, 1, 1, "test"))
+
     }
 }
 

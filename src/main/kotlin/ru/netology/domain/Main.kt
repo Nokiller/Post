@@ -7,7 +7,7 @@ object WallService {
     internal var posts = emptyArray<Post>()
     internal var comments = emptyArray<Comments>()
 
-    //    var reports = emptyArray<ReportComments>()
+  //  internal var reports = emptyArray<ReportComments>()
     private var nextId = 0
 
     fun clear() {
@@ -18,7 +18,7 @@ object WallService {
     fun add(post: Post): Post {
         post.id = nextId
         nextId += 1
-        posts += post
+        posts += post.copy()
         return posts.last()
     }
 
@@ -51,9 +51,6 @@ object WallService {
     fun createComment(postId: Int, comment: Comments): Comments {
         var status = false
 
-        for (i in posts)
-            println(i)
-
         for (post in posts) {
             if (post.id == postId) {
                 comments += comment
@@ -61,15 +58,17 @@ object WallService {
             }
         }
         if (!status) {
-            throw Exception("PostNotFoundException")
+            throw PostNotFoundException("PostNotFoundException")
         }
         return comments.last()
     }
+
+
 //    fun createReportForComment(commentId: Int, reason: Int, reportComments: ReportComments): Boolean {
 //        var result = false
-//        for ((index, report) in reports.withIndex()) {
+//        for (report in reports) {
 //            if (report.commentId == commentId && report.reason == reason) {
-//                reports += reportComments
+//                reports += reportComments.copy()
 //                result = true   //TODO Не получается получить true
 //            } else if (report.commentId == commentId && report.reason != reason) {
 //                throw Exception("PastReasonNotEqualException")
@@ -87,44 +86,44 @@ object WallService {
 
 fun main() {
 
-    val post = Post(
-        id = 0,
-        ownerId = 2,
-        fromId = 312415,
-        date = 1663613504,
-        text = "Welcome!",
-        replyOwnerId = 0,
-        replyPostId = 0,
-        friendsOnly = false,
-        commentsOfPost = CommentsOfPost(1),
-        copyright = "Vk",
-        likes = Likes(1),
-        reposts = Reposts(2),
-        views = Views(4),
-        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+//    val post = Post(
+//        ownerId = 2,
+//        fromId = 312415,
+//        date = 1663613504,
+//        text = "Welcome!",
+//        replyOwnerId = 0,
+//        replyPostId = 0,
+//        friendsOnly = false,
+//        commentsOfPost = CommentsOfPost(1),
+//        copyright = "Vk",
+//        likes = Likes(1),
+//        reposts = Reposts(2),
+//        views = Views(4),
+//        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+//
+//    )
+//
+//    val updatePost = Post(
+//        id = 1,
+//        ownerId = 5,
+//        fromId = 4,
+//        date = 1663613504,
+//        text = "Welcome home!",
+//        replyOwnerId = null,
+//        replyPostId = null,
+//        friendsOnly = false,
+//        commentsOfPost = CommentsOfPost(2),
+//        copyright = "Vk",
+//        likes = Likes(3),
+//        reposts = Reposts(2),
+//        views = Views(4),
+//        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+//    )
 
-    )
+//    WallService.add(post)
+    //WallService.add(post)
 
-    val updatePost = Post(
-        id = 1,
-        ownerId = 3,
-        fromId = 4,
-        date = 1663613504,
-        text = "Welcome home!",
-        replyOwnerId = null,
-        replyPostId = null,
-        friendsOnly = false,
-        commentsOfPost = CommentsOfPost(2),
-        copyright = "Vk",
-        likes = Likes(3),
-        reposts = Reposts(2),
-        views = Views(4),
-        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
-    )
-    WallService.add(post)
-    WallService.add(updatePost)
-
-    WallService.createComment(1, Comments(1, 1, 1, "test"))
+//    WallService.createComment(0, Comments(1, 1, 1, "test"))
 
  // WallService.createComment(2, Comments(2, 1, 1, "test"))
 
