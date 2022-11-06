@@ -189,7 +189,7 @@ class WallServiceTest {
     }
 
     @Test
-    fun shouldThrow() {
+    fun commentAddingProcessShouldThrow1() {
         // arrange
         val post = Post(
             ownerId = 2,
@@ -216,11 +216,11 @@ class WallServiceTest {
         }
 
         // assert
-        assertEquals("PostNotFoundException", exception.message)
+        assertEquals("The post not found", exception.message)
     }
 
     @Test(expected = PostNotFoundException::class)
-    fun shouldThrow2() {
+    fun commentAddingProcessShouldThrow2() {
 
         val post = Post(
             ownerId = 2,
@@ -241,6 +241,95 @@ class WallServiceTest {
 
         WallService.createComment(1, Comments(1, 1, 1, "test"))
 
+    }
+
+    @Test
+    fun reportAddedToComment() {
+        // arrange
+        val post1 = Post(
+            id = 2,
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            commentsOfPost = CommentsOfPost(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+        )
+
+        WallService.add(post1)
+        WallService.createComment(post1.id, Comments(id = 3, fromId = 2, date = 1, text = "test"))
+        WallService.createReportForComment(
+            commentId = 3,
+            reason = 6,
+            reportComments = ReportComments(1, 1, 1 , 6)
+        )
+
+        // act
+        val result = WallService.reports[0].commentId
+
+        // assert
+        assertEquals(1, result)
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun reportAddingProcessShouldThrowDueToReasonValue() {
+
+        val post = Post(
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            commentsOfPost = CommentsOfPost(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+        )
+        WallService.add(post)
+        WallService.createComment(post.id, Comments(id = 3, fromId = 2, date = 1, text = "test"))
+        WallService.createReportForComment(
+            commentId = 3,
+            reason = 7,
+            reportComments = ReportComments(1, 1, 1 , 7)
+        )
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun reportAddingProcessShouldThrowDueToCommentId() {
+
+        val post = Post(
+            ownerId = 2,
+            fromId = 312415,
+            date = 1663613504,
+            text = "Welcome!",
+            replyOwnerId = 0,
+            replyPostId = 0,
+            friendsOnly = false,
+            commentsOfPost = CommentsOfPost(2),
+            copyright = "Vk",
+            likes = Likes(1),
+            reposts = Reposts(2),
+            views = Views(4),
+            attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+        )
+        WallService.add(post)
+        WallService.createComment(post.id, Comments(id = 3, fromId = 2, date = 1, text = "test"))
+        WallService.createReportForComment(
+            commentId = 1,
+            reason = 6,
+            reportComments = ReportComments(1, 1, 1 , 6)
+        )
     }
 }
 

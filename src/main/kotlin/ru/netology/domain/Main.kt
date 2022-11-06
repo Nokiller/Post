@@ -7,7 +7,7 @@ object WallService {
     internal var posts = emptyArray<Post>()
     internal var comments = emptyArray<Comments>()
 
-  //  internal var reports = emptyArray<ReportComments>()
+    internal var reports = emptyArray<ReportComments>()
     private var nextId = 0
 
     fun clear() {
@@ -58,75 +58,79 @@ object WallService {
             }
         }
         if (!status) {
-            throw PostNotFoundException("PostNotFoundException")
+            throw PostNotFoundException("The post not found")
         }
         return comments.last()
     }
 
+    fun createReportForComment(commentId: Int, reason: Int, reportComments: ReportComments): ReportComments {
+        var result = false
+        val listOfReasons = setOf<Int>(0, 1, 2, 3, 4, 5, 6, 8)
 
-//    fun createReportForComment(commentId: Int, reason: Int, reportComments: ReportComments): Boolean {
-//        var result = false
-//        for (report in reports) {
-//            if (report.commentId == commentId && report.reason == reason) {
-//                reports += reportComments.copy()
-//                result = true   //TODO Не получается получить true
-//            } else if (report.commentId == commentId && report.reason != reason) {
-//                throw Exception("PastReasonNotEqualException")
-//              //  result = 0
-//            } else if (report.commentId != commentId && report.reason == reason)  {
-//                throw Exception("PastCommentIdNotEqualException")
-//            } else {
-//                throw Exception("UndefinedPostException")
-//            }
-//        }
-//        return result
-//    }
+        for (comment in comments) {
+            if (comment.id == commentId && listOfReasons.contains(reason)) {
+                reports += reportComments.copy()
+                result = true
+            }
+        }
+        if (!result) {
+            throw PostNotFoundException("The post not found or the reason is not correct")
+        }
+        return reports.last()
+    }
 
 }
 
 fun main() {
 
-//    val post = Post(
-//        ownerId = 2,
-//        fromId = 312415,
-//        date = 1663613504,
-//        text = "Welcome!",
-//        replyOwnerId = 0,
-//        replyPostId = 0,
-//        friendsOnly = false,
-//        commentsOfPost = CommentsOfPost(1),
-//        copyright = "Vk",
-//        likes = Likes(1),
-//        reposts = Reposts(2),
-//        views = Views(4),
-//        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
-//
-//    )
-//
-//    val updatePost = Post(
-//        id = 1,
-//        ownerId = 5,
-//        fromId = 4,
-//        date = 1663613504,
-//        text = "Welcome home!",
-//        replyOwnerId = null,
-//        replyPostId = null,
-//        friendsOnly = false,
-//        commentsOfPost = CommentsOfPost(2),
-//        copyright = "Vk",
-//        likes = Likes(3),
-//        reposts = Reposts(2),
-//        views = Views(4),
-//        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
-//    )
+    val post = Post(
+        ownerId = 2,
+        fromId = 312415,
+        date = 1663613504,
+        text = "Welcome!",
+        replyOwnerId = 0,
+        replyPostId = 0,
+        friendsOnly = false,
+        commentsOfPost = CommentsOfPost(1),
+        copyright = "Vk",
+        likes = Likes(1),
+        reposts = Reposts(2),
+        views = Views(4),
+        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
 
-//    WallService.add(post)
-    //WallService.add(post)
+    )
 
-//    WallService.createComment(0, Comments(1, 1, 1, "test"))
+    val updatePost = Post(
+        id = 1,
+        ownerId = 5,
+        fromId = 4,
+        date = 1663613504,
+        text = "Welcome home!",
+        replyOwnerId = null,
+        replyPostId = null,
+        friendsOnly = false,
+        commentsOfPost = CommentsOfPost(2),
+        copyright = "Vk",
+        likes = Likes(3),
+        reposts = Reposts(2),
+        views = Views(4),
+        attachment = GraffitiAttachment(Graffiti(1, 2, "22", "24"))
+    )
 
- // WallService.createComment(2, Comments(2, 1, 1, "test"))
+    WallService.add(post)
+    WallService.add(post)
 
-//    println( WallService.createReportForComment(commentId = 1, reason = 1, reportComments = ReportComments(1,2, WallService.comments[2].id, 1)))
+    WallService.createComment(0, Comments(0, 1, 1, "test"))
+    WallService.createComment(1, Comments(1, 1, 1, "test"))
+
+
+    println(
+        WallService.createReportForComment(
+            commentId = 1,
+            reason = 6,
+            reportComments = ReportComments(1, 1, 0, 0)
+        )
+    )
+
 
 }
