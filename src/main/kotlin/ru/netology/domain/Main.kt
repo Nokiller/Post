@@ -69,7 +69,7 @@ object WallService {
 
         for (comment in comments) {
             if (comment.id == commentId && listOfReasons.contains(reason)) {
-                reports += reportComments.copy()
+                reports += reportComments
                 result = true
             }
         }
